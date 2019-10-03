@@ -16,7 +16,10 @@ def load_twitter_api():
     """
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+
+    # params wait_on_rate_limit and wait_on_rate_limit_notify
+    # tweepy API call auto wait (sleep) when it hits the rate limit
+    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
     return api
 
 def search_tweets(query, max_tweets=1000000, lang='pt'):    
@@ -39,18 +42,21 @@ def search_tweets(query, max_tweets=1000000, lang='pt'):
 
     return data
 
+def get_connection():        
+    connection_string_local = "mongodb://localhost:27017/"    
+    return pymongo.MongoClient(connection_string_local)
+
 def save_collections(data):
     try:
         # connect in mongoDB
-        connection = pymongo.MongoClient("mongodb://localhost:27017/")
+        connection = get_connection()
         
         # create database and create collections
         db = connection['twitterdb']
         tweets = db['tweets']
 
         # insert multiple documents into a collection
-        resp = tweets.insert_many(data)
-        
+        resp = tweets.insert_many(data)        
 
     except ConnectionFailure:
         print("Server not available")
