@@ -11,7 +11,7 @@ def streaming():
     since_id = None
     tweets_per_qry = 100
 
-    max_tweet_database = 10
+    max_tweet_database = 100
 
     # search tweets
     query = ['$btc', '#btc', 'btc', '$bitcoin', '#bitcoin', 'bitcoin']
@@ -45,7 +45,7 @@ def streaming():
                 print("No more tweets found")
                 break
 
-            if count_tweets > max_tweet_database:
+            if count_tweets >= max_tweet_database:
                 print(f"Downloaded tweets: {count_tweets}")
                 break
 
