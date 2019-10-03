@@ -19,6 +19,10 @@ def streaming():
     count_tweets = 0
     api = load_twitter_api()
 
+    # connect in mongoDB
+    connection = get_connection()
+    print("Connect in mongoDB")
+
     print("Downloading tweets...")
 
     while True:
@@ -34,20 +38,23 @@ def streaming():
                 else:   
                     tweets = api.search(q=query, lang=lang, since_id=since_id, max_id=str(max_id - 1))
 
-            max_id = tweets[-1].id
             count_tweets += len(tweets)
+            print("", end = ".")
 
-            # saves to mongoDB database
-            data = [t._json for t in tweets]            
-            save_collections(data)
-
-            if not tweets:
-                print("No more tweets found")
+            if not tweets:                
+                print("\nNo more tweets found")
                 break
 
             if count_tweets >= max_tweet_database:
                 print(f"Downloaded tweets: {count_tweets}")
                 break
+
+            # saves to mongoDB database
+            data = [t._json for t in tweets]            
+            if len(data) > 0:
+                save_collections(data, connection)
+
+            max_id = tweets[-1].id
 
         except tweepy.TweepError as e:            
             print(f"Tweety error : {str(e)}")

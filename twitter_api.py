@@ -42,21 +42,26 @@ def search_tweets(query, max_tweets=1000000, lang='pt'):
 
     return data
 
-def get_connection():        
-    connection_string_local = "mongodb://localhost:27017/"    
-    return pymongo.MongoClient(connection_string_local)
 
-def save_collections(data):
+def get_connection():        
     try:
-        # connect in mongoDB
-        connection = get_connection()
-        
+        connection_string_local = "mongodb://localhost:27017/"    
+        return pymongo.MongoClient(connection_string_local)
+    except ConnectionFailure:
+        print("Server not available")
+
+
+def save_collections(data, connection=None):
+    try:
+
+        if not connection:
+            connection = get_connection()
+
         # create database and create collections
         db = connection['twitterdb']
         tweets = db['tweets']
 
         # insert multiple documents into a collection
-        resp = tweets.insert_many(data)        
-
+        resp = tweets.insert_many(data)
     except ConnectionFailure:
         print("Server not available")
