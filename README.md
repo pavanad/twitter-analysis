@@ -5,6 +5,7 @@ Applying data science to twitter api
 
 ```bash
 pipenv install
+python -m spacy download en
 python -m textblob.download_corpora
 ```
 ## Run MongoDB in docker
