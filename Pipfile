@@ -10,6 +10,9 @@ bpython = "*"
 tweepy = "*"
 pymongo = {extras = ["tls"],version = "*"}
 dnspython = "*"
+textblob = "*"
+pandas = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"
