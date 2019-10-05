@@ -7,11 +7,11 @@ from twitter_api import *
 def streaming():
     
     max_id = -1
-    lang = 'pt'
+    lang = 'en'
     since_id = None
     tweets_per_qry = 100
 
-    max_tweet_database = 100
+    max_tweet_database = 10000
 
     # search tweets
     query = ['$btc', '#btc', 'btc', '$bitcoin', '#bitcoin', 'bitcoin']
