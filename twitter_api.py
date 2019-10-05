@@ -65,3 +65,23 @@ def save_collections(data, connection=None):
         resp = tweets.insert_many(data)
     except ConnectionFailure:
         print("Server not available")
+
+
+def get_count_collections():
+    """
+    Return count collections
+    """
+
+    connection = get_connection()
+    db = connection['twitterdb']
+    tweets = db['tweets']
+    return tweets.count()
+
+def clean_database():
+    """
+    Clean all collections in database
+    """        
+    connection = get_connection()
+    db = connection['twitterdb']
+    tweets = db['tweets']
+    tweets.remove({})

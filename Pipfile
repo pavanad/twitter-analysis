@@ -13,6 +13,8 @@ dnspython = "*"
 textblob = "*"
 pandas = "*"
 matplotlib = "*"
+pprint = "*"
+spacy = "*"
 
 [requires]
 python_version = "3.7"

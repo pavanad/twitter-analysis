@@ -8,6 +8,7 @@ def streaming():
     
     max_id = -1
     lang = 'en'
+    result_type = 'mixed'
     since_id = None
     tweets_per_qry = 100
 
@@ -29,14 +30,14 @@ def streaming():
         try:
             if (max_id <= 0):
                 if (not since_id):
-                    tweets = api.search(q=query, lang=lang, count=tweets_per_qry)
+                    tweets = api.search(q=query, lang=lang, count=tweets_per_qry, result_type=result_type)
                 else:
-                    tweets = api.search(q=query, lang=lang, count=tweets_per_qry, since_id=since_id)
+                    tweets = api.search(q=query, lang=lang, count=tweets_per_qry, since_id=since_id, result_type=result_type)
             else:
                 if (not since_id):
-                    tweets = api.search(q=query, lang=lang, max_id=str(max_id - 1))
+                    tweets = api.search(q=query, lang=lang, max_id=str(max_id - 1), result_type=result_type)
                 else:   
-                    tweets = api.search(q=query, lang=lang, since_id=since_id, max_id=str(max_id - 1))
+                    tweets = api.search(q=query, lang=lang, since_id=since_id, max_id=str(max_id - 1), result_type=result_type)
 
             count_tweets += len(tweets)
             print("", end = ".")
